@@ -56,12 +56,12 @@ export default function Matches() {
                             margin="m-0"
                             contentWrapPadding="p-1">
                             <div className="grid grid-cols-8 gap-2 ">
-                                <div className="col-span-4 grid grid-cols-3 w-full">
+                                <div className="col-span-4 grid grid-cols-3 w-full px-0.5 pt-0.5">
                                     <Logo
-                                        className="w-full h-full drop-shadow-[rgb(59_130_246)_0px_0px_8px]"
+                                        className="w-full h-full h- drop-shadow-[rgb(59_130_246)_0px_0px_8px]"
                                         src="https://raw.githubusercontent.com/Jayke770/teamdao-staking-icons/master/teamdao_mlbb/INDIA8.png"
-                                        size="w-full h-18"
-                                        padding={'p-1'}
+                                        size="w-full h-20"
+                                        padding={'md:p-1'}
                                         onClick={() => console.log('fas')} />
                                     <div className="flex flex-col justify-end items-center">
                                         <span className="font-bold text-2xl tracking-wider text-white">VS</span>
@@ -70,8 +70,8 @@ export default function Matches() {
                                     <Logo
                                         className="w-full h-full drop-shadow-[rgb(236_72_153)_0px_0px_8px]"
                                         src="https://raw.githubusercontent.com/Jayke770/teamdao-staking-icons/master/teamdao_mlbb/JULIET1.png"
-                                        size="w-full h-18"
-                                        padding={'p-1'}
+                                        size="w-full h-20"
+                                        padding={'md:p-1'}
                                         onClick={() => console.log('fas')} />
                                     <div className="col-span-full mt-2 grid grid-cols-3">
                                         <div className="flex justify-center items-center gap-1">

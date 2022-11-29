@@ -23,7 +23,7 @@ export default function Control() {
                         <HiBars3BottomRight size={'1.75rem'} />
                     </Link>
                 } />
-            <div className="flex flex-col gap-2 py-3 px-2">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 py-3 px-2">
                 <NextLink href="/control/users">
                     <Card
                         margin="m-0">
