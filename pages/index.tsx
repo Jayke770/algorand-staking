@@ -4,7 +4,7 @@ import { MdAccountCircle, MdChevronRight } from 'react-icons/md'
 import NextLink from 'next/link'
 import { useWeb3 } from '../lib'
 export default function Home() {
-  const { connect, disconnect, signtx, active, account } = useWeb3()
+  const { connect, disconnect, active, account } = useWeb3()
   return (
     <Page>
       <Head>

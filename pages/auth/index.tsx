@@ -13,6 +13,7 @@ export default function Auth() {
                     <div className='py-4'>
                         <div className='flex justify-center items-center'>
                             <img
+                                alt=''
                                 src='/assets/logo.png' />
                         </div>
                         <List
