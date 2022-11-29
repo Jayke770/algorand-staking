@@ -19,7 +19,6 @@ export default function Matches() {
                 <title>Matches</title>
             </Head>
             <Navbar
-                medium
                 colors={{
                     textMaterial: 'text-teamdao-primary'
                 }}
@@ -55,16 +54,16 @@ export default function Matches() {
                         <Card
                             className={`cursor-pointer border-t border-l rounded-lg ${i % 2 === 0 ? 'border-red-600' : 'border-blue-600'} `}
                             margin="m-0"
-                            contentWrapPadding="p-2">
+                            contentWrapPadding="p-1">
                             <div className="grid grid-cols-8 gap-2 ">
                                 <div className="col-span-4 grid grid-cols-3 w-full">
                                     <Logo
                                         className="w-full h-full drop-shadow-[rgb(59_130_246)_0px_0px_8px]"
                                         src="https://raw.githubusercontent.com/Jayke770/teamdao-staking-icons/master/teamdao_mlbb/INDIA8.png"
                                         size="w-full h-18"
-                                        padding={'p-2'}
+                                        padding={'p-1'}
                                         onClick={() => console.log('fas')} />
-                                    <div className="flex flex-col justify-center items-center">
+                                    <div className="flex flex-col justify-end items-center">
                                         <span className="font-bold text-2xl tracking-wider text-white">VS</span>
                                         <span className="text-red-500 text-sm">Closed</span>
                                     </div>
@@ -72,7 +71,7 @@ export default function Matches() {
                                         className="w-full h-full drop-shadow-[rgb(236_72_153)_0px_0px_8px]"
                                         src="https://raw.githubusercontent.com/Jayke770/teamdao-staking-icons/master/teamdao_mlbb/JULIET1.png"
                                         size="w-full h-18"
-                                        padding={'p-2'}
+                                        padding={'p-1'}
                                         onClick={() => console.log('fas')} />
                                     <div className="col-span-full mt-2 grid grid-cols-3">
                                         <div className="flex justify-center items-center gap-1">
