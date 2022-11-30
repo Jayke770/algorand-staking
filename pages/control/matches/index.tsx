@@ -6,6 +6,7 @@ import { MdAdd } from 'react-icons/md'
 import AvatarGroup from '@atlaskit/avatar-group'
 import { faker } from '@faker-js/faker'
 import CountUp from "react-countup"
+import NextLink from 'next/link'
 export default function Matches() {
     const router = useRouter()
     const data = Array.from({ length: 10 }).map(() => {
@@ -75,10 +76,13 @@ export default function Matches() {
                     </Card>
                 ))}
             </div>
-            <Fab
-                text="New Match"
-                icon={<MdAdd />}
-                className=" k-color-brand-teamdao-primary fixed bottom-3 right-3" />
+            <NextLink href={'/control/matches/create'} passHref>
+                <Fab
+                    component="div"
+                    text="New Match"
+                    icon={<MdAdd />}
+                    className=" k-color-brand-teamdao-primary fixed bottom-3 right-3" />
+            </NextLink>
         </Page>
     )
 }

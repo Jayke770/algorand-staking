@@ -4,6 +4,9 @@ export default function Document() {
     return (
         <Html lang='en' className='dark'>
             <Head>
+                <link rel="manifest" href="/manifest.json" />
+                <link rel="apple-touch-icon" href="/assets/logo.png"></link>
+                <meta name="theme-color" content="#1b8520" />
                 <script src="https://telegram.org/js/telegram-web-app.js" />
             </Head>
             <body>
