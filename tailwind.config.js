@@ -9,7 +9,9 @@ module.exports = konstaConfig({
       'brand-teamdao-white': "#fff",
       'brand-teamdao-red': '#ff3b30',
       'brand-teamdao-blue': '#2563eb',
-      'brand-teamdao-teal': '#0d9488'
+      'brand-teamdao-teal': '#0d9488',
+      'brand-teamdao-fuchsia': '#a21caf',
+      "brand-teamdao-pink": "#be185d"
     }
   },
   content: [

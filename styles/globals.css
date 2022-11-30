@@ -13,6 +13,11 @@
 ::-webkit-scrollbar-thumb {
     @apply bg-teamdao-primary cursor-pointer;
 }
+/* Sweetalert */
+.swal2-popup,
+.swal2-popup.swal2-toast {
+    @apply  dark:text-neutral-300 dark:bg-md-dark-surface-1;
+}
 @font-face {
     font-family: 'Robus';
     src: url("/assets/fonts/Robus.otf");

@@ -8,7 +8,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const ORIGIN = [process.env.HOST]
 const app = next({ dev })
 const handle = app.getRequestHandler()
-app.prepare()
+app.prepare().catch((e) => console.log(e))
 const server = express()
 //server settings 
 server.use(cors({ origin: ORIGIN }))

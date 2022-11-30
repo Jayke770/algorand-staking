@@ -2,9 +2,16 @@ import { Button, Card, Chip, Link, Navbar, Page, Tabbar } from 'konsta/react'
 import Head from 'next/head'
 import { MdAccountCircle, MdChevronRight } from 'react-icons/md'
 import NextLink from 'next/link'
-import { useWeb3 } from '../lib'
+import { useConnectWallet, PROVIDER_ID } from '@txnlab/use-wallet'
 export default function Home() {
-  const { connect, disconnect, active, account } = useWeb3()
+  const { accounts, reconnectProviders, providers, activeAccount } = useConnectWallet({
+    providers: [
+      PROVIDER_ID.DEFLY,
+      PROVIDER_ID.PERA_WALLET,
+      PROVIDER_ID.MYALGO_WALLET,
+      PROVIDER_ID.WALLET_CONNECT
+    ]
+  })
   return (
     <Page>
       <Head>
