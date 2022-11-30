@@ -288,7 +288,7 @@ export default function Teams() {
         }
     }
     useEffect(() => {
-        if (teamsData) setTeamList({ ...TeamList, data: teamsData, all: teamsData, more: true })
+        if (teamsData) setTeamList({ data: teamsData, all: teamsData, more: true, searching: false })
     }, [teamsData, setTeamList])
     return (
         <Page className='overflow-hidden pb-10-safe'>

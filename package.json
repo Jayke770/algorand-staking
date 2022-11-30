@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node ./server/app.mjs",
-    "build": "next build",
+    "build": "next build && yarn lint",
     "start": "cross-env NODE_ENV=production node ./server/app.mjs",
     "lint": "next lint"
   },
