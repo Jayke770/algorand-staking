@@ -24,7 +24,7 @@
     "**/*.ts",
     "**/*.tsx",
     "models/server/connect.mjs"
-  ],
+, "models/server/match.mjs"  ],
   "exclude": [
     "node_modules"
   ]

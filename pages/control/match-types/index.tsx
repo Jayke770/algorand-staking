@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import { MdAdd } from "react-icons/md"
 import { Swal } from '../../../lib'
 import { matchTypes, ws } from '../../../lib/control'
-import { MatchTypesLoader, MatchType } from '../../../components/control'
+import { MatchTypesLoader, MatchType, MatchTypesEmpty } from '../../../components/control'
 interface NewMatchType {
     opened?: boolean,
     name?: string,
@@ -179,6 +179,7 @@ export default function MatchTypes() {
                         onDelete={(id) => _delete(id)}
                         onUpdate={(id, name, gc) => console.log()} />
                 ))}
+                {!typesLoading && TypesList?.length === 0 ? <MatchTypesEmpty /> : null}
             </div>
             <Actions
                 onBackdropClick={() => setNewType({ ...newType, opened: false })}

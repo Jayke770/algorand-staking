@@ -17,7 +17,7 @@ export default function Teams() {
         revalidateOnFocus: true,
         revalidateOnReconnect: true,
         refreshWhenHidden: true,
-        refreshInterval: 20000
+        refreshInterval: 10000
     })
     const x: Types = {
         typesData: data,

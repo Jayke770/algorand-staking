@@ -302,7 +302,6 @@ export default function Teams() {
                 title="Teams"
                 left={<NavbarBackLink onClick={() => router.push("/control")} />} />
             <div className='flex p-3 h-[calc(100vh-65px)] overflow-auto'>
-
                 {teamsLoading ? <TeamLoader /> : null}
                 {!teamsLoading && teamsData && teamsData?.length > 0 ? (
                     <div className='flex flex-col gap-2 w-full'>
