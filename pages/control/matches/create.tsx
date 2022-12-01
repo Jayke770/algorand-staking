@@ -318,7 +318,6 @@ export default function CreateMatch() {
                                                 outlineLabelBgMaterial: 'bg-md-light-surface dark:bg-md-dark-surface-1',
                                                 outlineBorderMaterial: "border-md-light-on-surface dark:border-md-dark-on-surface/30"
                                             }}
-                                            value={createMatch?.start}
                                             outline
                                             label="Date time"
                                             type="datetime-local"

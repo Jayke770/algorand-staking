@@ -1,7 +1,12 @@
 import mongoose from "mongoose"
 interface Match {
     id: string,
-    teams: { id: string, score: number }[],
+    teams: {
+        id: string,
+        name: string,
+        logo: string,
+        score: number
+    }[],
     stakingStart: string,
     winner: string,
     matchType: string,
@@ -34,10 +39,12 @@ const match = new mongoose.Schema<Match>({
     id: { type: String, required: true },
     teams: [{
         id: String,
+        name: String,
+        logo: String,
         score: Number
     }],
     stakingStart: { type: String, required: true },
-    winner: { type: String, required: true },
+    winner: { type: String },
     matchType: { type: String, required: true },
     bettors: [{
         betId: String,
@@ -48,8 +55,8 @@ const match = new mongoose.Schema<Match>({
         created: String,
     }],
     declare: {
-        initial: { type: Boolean, required: true },
-        final: { type: Boolean, required: true }
+        initial: { type: Boolean },
+        final: { type: Boolean }
     },
     comments: [{
         commentId: String,
@@ -57,10 +64,10 @@ const match = new mongoose.Schema<Match>({
         created: String
     }],
     isDone: { type: Boolean, required: true },
-    matchNumber: { type: Number, required: true },
-    profit: { type: Number, required: true },
-    shareLink: { type: String, required: true },
-    liveLink: { type: String, required: true },
+    matchNumber: { type: Number },
+    profit: { type: Number },
+    shareLink: { type: String },
+    liveLink: { type: String },
     createdBy: { type: String, required: true },
     created: { type: String, required: true },
 })

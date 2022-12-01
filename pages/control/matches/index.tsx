@@ -1,4 +1,4 @@
-import React from "react"
+import { useContext, useEffect, useState } from "react"
 import Head from "next/head"
 import { Page, Navbar, NavbarBackLink, Fab, Segmented, SegmentedButton, Card } from 'konsta/react'
 import { useRouter } from "next/router"
@@ -7,14 +7,93 @@ import AvatarGroup from '@atlaskit/avatar-group'
 import { faker } from '@faker-js/faker'
 import CountUp from "react-countup"
 import NextLink from 'next/link'
+import { matches, ws } from "../../../lib/control"
+import InfiniteScroll from 'react-infinite-scroller'
+import { MatchCard, MatchLoader } from "../../../components/control"
+interface Matches {
+    default?: {
+        _id?: string,
+        __v: any,
+        id: string,
+        teams: { id: string, logo: string, name: string, score: number }[],
+        stakingStart: string,
+        winner: string,
+        matchType: string,
+        bettors: {
+            betId: string,
+            address: string,
+            userid: string,
+            username: string
+            amount: number,
+            created: string,
+        }[],
+        declare: {
+            initial: boolean,
+            final: boolean
+        },
+        comments: {
+            commentId: string,
+            message: string,
+            created: string
+        }[],
+        isDone: boolean,
+        matchNumber: number,
+        profit: number,
+        shareLink: string,
+        liveLink: string,
+        createdBy: string,
+        created: string,
+    }[],
+    data?: {
+        _id?: string,
+        __v: any,
+        id: string,
+        teams: { id: string, name: string, logo: string, score: number }[],
+        stakingStart: string,
+        winner: string,
+        matchType: string,
+        bettors: {
+            betId: string,
+            address: string,
+            userid: string,
+            username: string
+            amount: number,
+            created: string,
+        }[],
+        declare: {
+            initial: boolean,
+            final: boolean
+        },
+        comments: {
+            commentId: string,
+            message: string,
+            created: string
+        }[],
+        isDone: boolean,
+        matchNumber: number,
+        profit: number,
+        shareLink: string,
+        liveLink: string,
+        createdBy: string,
+        created: string,
+    }[],
+    searching?: boolean,
+    more?: boolean
+}
 export default function Matches() {
     const router = useRouter()
+    const socket = useContext(ws)
+    const { matchesLoading, matchesData } = matches()
+    const [Matches, setMatches] = useState<Matches>()
     const data = Array.from({ length: 10 }).map(() => {
         return {
             name: faker.name.fullName(),
             src: faker.image.avatar()
         }
     })
+    useEffect(() => {
+        if (matchesData) setMatches({ ...Matches, data: matchesData, default: matchesData, searching: false, more: true })
+    }, [matchesData, setMatches])
     return (
         <Page>
             <Head>
@@ -28,8 +107,8 @@ export default function Matches() {
                 left={
                     <NavbarBackLink onClick={() => router.push("/control")} />
                 } />
-            <div className="grid p-3 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                <div className="col-span-full w-full md:w-96 mb-2">
+            <div className="flex flex-col p-3 gap-3">
+                <div className="w-full md:w-96 mb-1">
                     <Segmented
                         strong
                         raised
@@ -39,7 +118,18 @@ export default function Matches() {
                         <SegmentedButton>Ended</SegmentedButton>
                     </Segmented>
                 </div>
-                {Array.from({ length: 20 }).map((_, i) => (
+                <div className="h-[calc(100vh-150px)] overflow-auto">
+                    <InfiniteScroll
+                        pageStart={0}
+                        hasMore={true}
+                        loadMore={() => console.log()}
+                        useWindow={false}
+                        className="grid gap-2.5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {matchesLoading ? <MatchLoader /> : null}
+                        {Matches?.data?.map((match) => <MatchCard key={match.id} match={match} isNormalMatch={match.teams.length === 2} />)}
+                    </InfiniteScroll>
+                </div>
+                {/* {Array.from({ length: 20 }).map((_, i) => (
                     <Card
                         raised
                         key={i}
@@ -74,7 +164,7 @@ export default function Matches() {
                         margin='m-0'>
                         <AvatarGroup size="large" appearance="stack" data={data} maxCount={6} />
                     </Card>
-                ))}
+                ))} */}
             </div>
             <NextLink href={'/control/matches/create'} passHref>
                 <Fab
