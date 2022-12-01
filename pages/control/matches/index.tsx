@@ -92,7 +92,7 @@ export default function Matches() {
         }
     })
     useEffect(() => {
-        if (matchesData) setMatches({ ...Matches, data: matchesData, default: matchesData, searching: false, more: true })
+        if (matchesData) setMatches({ data: matchesData, default: matchesData, searching: false, more: true })
     }, [matchesData, setMatches])
     return (
         <Page>
