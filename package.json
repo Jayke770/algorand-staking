@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node ./server/app.mjs",
-    "build": "yarn add global pm2 && next build && yarn lint",
+    "build": "yarn global add pm2 && next build && yarn lint",
     "start": "pm2 start ecosystem.config.js --env production",
     "lint": "next lint"
   },
