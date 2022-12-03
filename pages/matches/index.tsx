@@ -1,18 +1,58 @@
-import { Navbar, Link, Page, Tabbar, TabbarLink, Card } from "konsta/react"
+import { Navbar, Link, Page, Tabbar, TabbarLink, Card, Segmented, SegmentedButton } from "konsta/react"
 import NextLink from 'next/link'
 import { MdArrowBack, MdExpandMore } from 'react-icons/md'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Logo } from "../../components"
 import Head from "next/head"
+import { ClientMatches, ClientMathTypes, wsClient } from '../../lib/client'
+import { useContext } from 'react'
+import { MatchCard, MatchEmpty, MatchLoader } from "../../components/client"
+type Match = {
+    __v: any,
+    id: string,
+    teams: { id: string, name: string, logo: string, score: number }[],
+    stakingStart: string,
+    winner: string,
+    matchType: string,
+    bettors: {
+        betId: string,
+        address: string,
+        userid: string,
+        username: string
+        amount: number,
+        created: string,
+    }[],
+    declare: {
+        initial: boolean,
+        final: boolean
+    },
+    comments: {
+        commentId: string,
+        message: string,
+        created: string
+    }[],
+    isDone: boolean,
+    matchNumber: number,
+    shareLink: string,
+    liveLink: string,
+    created: string,
+}
 interface Tab {
-    active?: 'yesterday' | 'today' | 'tomorrow',
-    data?: any[]
+    active: 'yesterday' | 'today' | 'tomorrow',
+    data: {
+        today: Match[],
+        yesterday: Match[],
+        tomorrow: Match[]
+    }
 }
 export default function Matches() {
-    const [tab, SetTab] = useState<Tab>({
-        active: 'today',
-        data: []
-    })
+    const socket = useContext(wsClient)
+    const { typesData, typesLoading } = ClientMathTypes()
+    const { matchesData, matchesLoading } = ClientMatches()
+    const [tab, setTab] = useState<Tab>({ active: 'today', data: { yesterday: [], today: [], tomorrow: [] } })
+    useEffect(() => {
+        if (matchesData) setTab({ ...tab, data: { today: matchesData.today, yesterday: matchesData.yesterday, tomorrow: matchesData.tomorrow } })
+    }, [matchesData, setTab])
     return (
         <Page>
             <Head>
@@ -24,7 +64,7 @@ export default function Matches() {
                 }}
                 title="Matches"
                 left={
-                    <NextLink href={"/"}>
+                    <NextLink href={"/"} className="h-full flex justify-center items-center">
                         <Link
                             navbar
                             component="div"
@@ -48,62 +88,58 @@ export default function Matches() {
                     </Link>
                 } />
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2.5 p-2.5">
-                {Array.from({ length: 20 }).map((_, i) => (
-                    <NextLink key={i} href={'/matches/1'}>
-                        <Card
-                            className={`cursor-pointer border-t border-l rounded-lg ${i % 2 === 0 ? 'border-red-600' : 'border-blue-600'} `}
-                            margin="m-0"
-                            contentWrapPadding="p-1">
-                            <div className="grid grid-cols-8 gap-2 ">
-                                <div className="col-span-4 grid grid-cols-3 w-full px-0.5 pt-0.5">
-                                    <Logo
-                                        className="w-full h-full h- drop-shadow-[rgb(59_130_246)_0px_0px_8px]"
-                                        src="https://raw.githubusercontent.com/Jayke770/teamdao-staking-icons/master/teamdao_mlbb/INDIA8.png"
-                                        size="w-full h-20"
-                                        padding={'md:p-1'}
-                                        onClick={() => console.log('fas')} />
-                                    <div className="flex flex-col justify-end items-center">
-                                        <span className="font-bold text-2xl tracking-wider text-white">VS</span>
-                                        <span className="text-red-500 text-sm">Closed</span>
-                                    </div>
-                                    <Logo
-                                        className="w-full h-full drop-shadow-[rgb(236_72_153)_0px_0px_8px]"
-                                        src="https://raw.githubusercontent.com/Jayke770/teamdao-staking-icons/master/teamdao_mlbb/JULIET1.png"
-                                        size="w-full h-20"
-                                        padding={'md:p-1'}
-                                        onClick={() => console.log('fas')} />
-                                    <div className="col-span-full mt-2 grid grid-cols-3">
-                                        <div className="flex justify-center items-center gap-1">
-                                            <span>1 = </span>
-                                            <span className="text-teamdao-primary">31</span>
-                                        </div>
-                                        <div />
-                                        <div className="flex justify-center items-center gap-1">
-                                            <span>1 = </span>
-                                            <span className="text-red-500">31</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-span-4 flex justify-center h-full w-full flex-col flex-[20%] px-2">
-                                    <div className="flex justify-between">
-                                        <span className="text-sm">Game:</span>
-                                        <span className="text-teamdao-primary text-sm">FIFA</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-sm">Prize Pool:</span>
-                                        <span className="text-teamdao-primary text-sm">FIFA</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-sm">Staring in:</span>
-                                        <span className="text-red-500 text-sm">Closed</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Card>
-                    </NextLink>
-                ))}
+            <div className="flex flex-col">
+                <div className="col-span-full animate__animated animate__fadeInRight ms-300 fixed md:static bottom-0 left-0 right-0 w-full md:w-96 transition-all z-30 p-2.5">
+                    <Segmented
+                        strong
+                        raised
+                        colors={{
+                            strongBgMaterial: "bg-md-light-surface-variant dark:bg-md-dark-surface-2"
+                        }}>
+                        <SegmentedButton
+                            strong
+                            onClick={() => setTab({ ...tab, active: "yesterday" })}
+                            active={tab.active === "yesterday"}
+                            className={`${tab.active === "yesterday" && "bg-white text-black"}`}>Yesterday</SegmentedButton>
+                        <SegmentedButton
+                            strong
+                            onClick={() => setTab({ ...tab, active: "today" })}
+                            active={tab.active === "today"}
+                            className={`${tab.active === "today" && "bg-white text-black"}`}>Today</SegmentedButton>
+                        <SegmentedButton
+                            strong
+                            onClick={() => setTab({ ...tab, active: "tomorrow" })}
+                            active={tab.active === "tomorrow"}
+                            className={`${tab.active === "tomorrow" && "bg-white text-black"}`}>Tomorrow</SegmentedButton>
+                    </Segmented>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2.5 max-h-[calc(100vh-125px)] overflow-auto md:max-h-full p-2.5">
+                    {/* yesterday */}
+                    {tab.active === "yesterday" && (
+                        matchesLoading ? <MatchLoader /> : (
+                            tab.data?.yesterday?.length > 0 ? (
+                                tab.data.yesterday.map((x, i) => <MatchCard key={x.id} index={i} isNormalMatch={x.teams.length === 2} match={x} />)
+                            ) : <MatchEmpty />
+                        )
+                    )}
+                    {/* yesterday */}
+                    {tab.active === "today" && (
+                        matchesLoading ? <MatchLoader /> : (
+                            tab.data?.today?.length > 0 ? (
+                                tab.data.today.map((x, i) => <MatchCard key={x.id} index={i} isNormalMatch={x.teams.length === 2} match={x} />)
+                            ) : <MatchEmpty />
+                        )
+                    )}
+                    {/* yesterday */}
+                    {tab.active === "tomorrow" && (
+                        matchesLoading ? <MatchLoader /> : (
+                            tab.data?.tomorrow?.length > 0 ? (
+                                tab.data.tomorrow.map((x, i) => <MatchCard key={x.id} index={i} isNormalMatch={x.teams.length === 2} match={x} />)
+                            ) : <MatchEmpty />
+                        )
+                    )}
+                </div>
             </div>
-        </Page>
+        </Page >
     )
 }

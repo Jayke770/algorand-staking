@@ -5,7 +5,58 @@ import { MdArrowBack } from "react-icons/md"
 import { Logo, Player } from "../../components"
 import { MdAdd, MdRemove, MdSend } from 'react-icons/md'
 import { FaPaperPlane } from 'react-icons/fa'
-export default function Match() {
+import type { GetServerSideProps } from 'next'
+import { dbConnect, match } from '../../models'
+import { useContext, useEffect, useState } from "react"
+import { wsClient } from '../../lib/client'
+interface Match {
+    __v: any,
+    id: string,
+    teams: { id: string, name: string, logo: string, score: number }[],
+    stakingStart: string,
+    winner: string,
+    matchType: string,
+    bettors: {
+        betId: string,
+        address: string,
+        userid: string,
+        username: string
+        amount: number,
+        created: string,
+    }[],
+    declare: {
+        initial: boolean,
+        final: boolean
+    },
+    comments: {
+        commentId: string,
+        message: string,
+        created: string
+    }[],
+    isDone: boolean,
+    matchNumber: number,
+    shareLink: string,
+    liveLink: string,
+    created: string,
+}
+interface Stake {
+    matchid?: string,
+    teamid?: string,
+    amount?: number
+}
+export default function Match({ data }: { data: any }) {
+    const socket = useContext(wsClient)
+    const [matchData, setMatchData] = useState<Match>(JSON.parse(data))
+    const [stake, setStake] = useState<Stake>()
+    useEffect(() => {
+        socket.emit("join-match-room", { id: matchData.id })
+        //new match bettor 
+        socket.on("match-bettor", (match) => setMatchData(match))
+        return () => {
+            socket.off("join-match-room")
+            socket.off("match-bettor")
+        }
+    }, [])
     return (
         <Page>
             <Head>
@@ -31,6 +82,7 @@ export default function Match() {
             <div className="flex flex-col lg:flex-row p-4 gap-3">
                 <div className="flex lg:flex-[30%]">
                     <div className="flex w-full flex-col gap-2">
+                        {/* stake logo */}
                         <Card
                             margin="m-0"
                             className="w-full">
@@ -60,7 +112,7 @@ export default function Match() {
                             <div className="flex flex-col mt-6 gap-3">
                                 <div className="grid grid-cols-3">
                                     <div className="flex justify-center items-center">
-                                        <span className="text-center font-teamdao tracking-widest text-2xl font-bold text-white">TEAM</span>
+                                        <span className="text-center font-teamdao tracking-widest text-2xl font-bold text-white">TEAM fsaffs fsafassf</span>
                                     </div>
                                     <div />
                                     <div className="flex justify-center items-center">
@@ -83,21 +135,31 @@ export default function Match() {
                                 </div>
                             </div>
                         </Card>
+                        {/* stake card */}
                         <Card
                             margin="m-0">
-                            <div className="grid grid-cols-3">
-                                <Button
-                                    className="w-auto k-color-brand-teamdao-red">
-                                    <MdRemove
-                                        size={'1.5rem'} />
-                                </Button>
+                            <div className="flex justify-between">
                                 <div className="font-semibold text-lg flex justify-center items-center">
-                                    1 TEAM
+                                    1 $ALGO
                                 </div>
-                                <Button
-                                    className="w-auto k-color-brand-teamdao-primary">
-                                    <MdAdd size={'1.5rem'} />
-                                </Button>
+                                <div className="flex gap-1">
+                                    <Button
+                                        small
+                                        className="w-auto !px-2 k-color-brand-teamdao-red">
+                                        <MdRemove
+                                            size={'1.25rem'} />
+                                    </Button>
+                                    <Button
+                                        small
+                                        className="w-auto !px-2 k-color-brand-teamdao-blue">
+                                        ALL IN
+                                    </Button>
+                                    <Button
+                                        small
+                                        className="w-auto !px-2 k-color-brand-teamdao-primary">
+                                        <MdAdd size={'1.25rem'} />
+                                    </Button>
+                                </div>
                             </div>
                             <Button
                                 className="mt-3 k-color-brand-teamdao-primary">
@@ -142,79 +204,9 @@ export default function Match() {
         </Page >
     )
 }
-//<div className="relative flex-[35%]">
-//                         <div className="chats flex flex-col gap-2 h-[calc(100%-75px)] overflow-auto">
-//                             <div className="flex flex-col w-full">
-//                                 <div className="flex flex-col gap-1 bg-md-dark-surface-1 rounded-b-lg rounded-tr-lg text-sm text-zinc-300 p-2">
-//                                     <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis cumque illo autem praesentium quasi voluptates delectus pariatur suscipit eius distinctio placeat sunt, ullam repellat blanditiis tenetur, dolores veritatis neque incidunt!</div>
-//                                     <div className="flex gap-1 items-center">
-//                                         <img
-//                                             src={"https://stake.teamdao.app/logo.png"}
-//                                             className="h-5 w-5 object-cover"
-//                                             alt="user" />
-//                                         <div className="text-xs">@JHON DOE</div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                             <div className="flex flex-col w-full">
-//                                 <div className="flex flex-col max-w-[80%] gap-1 bg-md-dark-surface-1 rounded-b-lg rounded-tr-lg text-sm text-zinc-300 p-2">
-//                                     <div>Lorus distinctio placeeritatis neque incidunt!</div>
-//                                     <div className="flex gap-1 items-center">
-//                                         <img
-//                                             src={"https://stake.teamdao.app/logo.png"}
-//                                             className="h-5 w-5 object-cover"
-//                                             alt="user" />
-//                                         <div className="text-xs">@JHON DOE</div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                             <div className="flex flex-col items-end w-full">
-//                                 <div className="flex flex-col gap-1 max-w-[80%] bg-slate-700 rounded-b-lg rounded-tl-lg text-sm text-zinc-300 p-2">
-//                                     <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis cumque illo autem praesentium quasi voluptates delectus pariatur suscipit eius distinctio placeat sunt, ullam repellat blanditiis tenetur, dolores veritatis neque incidunt!</div>
-//                                     <div className="flex gap-1 items-center">
-//                                         <img
-//                                             src={"https://stake.teamdao.app/logo.png"}
-//                                             className="h-5 w-5 object-cover"
-//                                             alt="user" />
-//                                         <div className="text-xs">@JHON DOE</div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                             <div className="flex flex-col items-end w-full">
-//                                 <div className="flex flex-col gap-1 max-w-[80%] bg-slate-700 rounded-b-lg rounded-tl-lg text-sm text-zinc-300 p-2">
-//                                     <div>Lfficiis lectus pariatu</div>
-//                                     <div className="flex gap-1 items-center">
-//                                         <img
-//                                             src={"https://stake.teamdao.app/logo.png"}
-//                                             className="h-5 w-5 object-cover"
-//                                             alt="user" />
-//                                         <div className="text-xs">@JHON DOE</div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                             <div className="flex flex-col w-full">
-//                                 <div className="flex flex-col max-w-[80%] gap-1 bg-md-dark-surface-1 rounded-b-lg rounded-tr-lg text-sm text-zinc-300 p-2">
-//                                     <div>Lorus distinctio placeeritatis neque incidunt!</div>
-//                                     <div className="flex gap-1 items-center">
-//                                         <img
-//                                             src={"https://stake.teamdao.app/logo.png"}
-//                                             className="h-5 w-5 object-cover"
-//                                             alt="user" />
-//                                         <div className="text-xs">@JHON DOE</div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                         <div className="absolute bottom-0 w-full">
-//                             <div className="relative">
-//                                 <textarea
-//                                     className="w-full outline-none pr-12 text-zinc-300 transition-all focus:ring-teamdao-primary focus:ring-1 focus:ring-offset-1 focus:ring-offset-zinc-800 py-2 px-3 rounded-lg bg-zinc-800"
-//                                     placeholder="Message" />
-//                                 <div className="absolute -top-1 right-4 h-full flex justify-center items-center">
-//                                     <FaPaperPlane
-//                                         className=" cursor-pointer"
-//                                         size={'1.5rem'} />
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { query } = ctx
+    await dbConnect()
+    const MATCH = await match.findOne({ id: { $eq: query['id'] } }, { _id: 0, profit: 0, createdBy: 0 })
+    return MATCH ? { props: { data: JSON.stringify(MATCH) } } : { props: {}, redirect: { destination: "/matches/404" } }
+}

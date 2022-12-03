@@ -31,7 +31,7 @@ const match = new mongoose.Schema({
     shareLink: { type: String, required: true },
     liveLink: { type: String, required: true },
     createdBy: { type: String, required: true },
-    created: { type: String, required: true },
+    created: { type: Number, required: true },
 })
 if (mongoose.models['match'] != null) {
     mongoose.deleteModel('match')

@@ -114,8 +114,8 @@ export default function Matches() {
                         raised
                         className=" k-color-brand-teamdao-secondary">
                         <SegmentedButton rounded strong active>All</SegmentedButton>
-                        <SegmentedButton>Ongoing</SegmentedButton>
-                        <SegmentedButton>Ended</SegmentedButton>
+                        <SegmentedButton rounded strong>Ongoing</SegmentedButton>
+                        <SegmentedButton rounded strong>Ended</SegmentedButton>
                     </Segmented>
                 </div>
                 <div className="h-[calc(100vh-150px)] overflow-auto">

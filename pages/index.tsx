@@ -2,25 +2,31 @@ import { Button, Card, Chip, Link, Navbar, Page, Tabbar } from 'konsta/react'
 import Head from 'next/head'
 import { MdAccountCircle, MdChevronRight } from 'react-icons/md'
 import NextLink from 'next/link'
-import { useConnectWallet, PROVIDER_ID } from '@txnlab/use-wallet'
+import { Web3Providers } from "../components"
+import { useState } from 'react'
+import { useWallet } from '@txnlab/use-wallet'
+interface Wallets {
+  opened: boolean
+}
 export default function Home() {
-  const { accounts, reconnectProviders, providers, activeAccount } = useConnectWallet({
-    providers: [
-      PROVIDER_ID.DEFLY,
-      PROVIDER_ID.PERA_WALLET,
-      PROVIDER_ID.MYALGO_WALLET,
-      PROVIDER_ID.WALLET_CONNECT
-    ]
+  const f = useWallet()
+  const [wallets, setWallets] = useState<Wallets>({
+    opened: false
   })
+  console.log(f)
   return (
     <Page>
       <Head>
         <title>$TEAM Stake</title>
       </Head>
+      <Web3Providers
+        opened={wallets.opened}
+        onClose={() => setWallets({ ...wallets, opened: false })} />
       <Navbar
         translucent
         right={
           <Link
+            onClick={() => setWallets({ ...wallets, opened: true })}
             navbar
             className='k-color-brand-teamdao-primary'>
             <MdAccountCircle

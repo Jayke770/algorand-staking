@@ -7,7 +7,7 @@ interface Match {
         logo: string,
         score: number
     }[],
-    stakingStart: string,
+    stakingStart: number,
     winner: string,
     matchType: string,
     bettors: {
@@ -33,7 +33,7 @@ interface Match {
     shareLink: string,
     liveLink: string,
     createdBy: string,
-    created: string,
+    created: Number,
 }
 const match = new mongoose.Schema<Match>({
     id: { type: String, required: true },
@@ -43,7 +43,7 @@ const match = new mongoose.Schema<Match>({
         logo: String,
         score: Number
     }],
-    stakingStart: { type: String, required: true },
+    stakingStart: { type: Number, required: true },
     winner: { type: String },
     matchType: { type: String, required: true },
     bettors: [{
@@ -69,7 +69,7 @@ const match = new mongoose.Schema<Match>({
     shareLink: { type: String },
     liveLink: { type: String },
     createdBy: { type: String, required: true },
-    created: { type: String, required: true },
+    created: { type: Number, required: true },
 })
 if (mongoose.models['match'] != null) {
     mongoose.deleteModel('match')

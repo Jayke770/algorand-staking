@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
-import { dbConnect, team } from '../../../../models'
+import { dbConnect, matchTypes, team, match } from '../../../../models'
 import moment from 'moment'
-import match from '../../../../models/match'
 import { config } from '../../../../lib'
 interface x extends NextApiRequest {
     body: {
@@ -28,7 +27,8 @@ export default async function CreateMatch(req: x, res: NextApiResponse<Response>
                 const STAKING_START = moment(start).format("x")
                 const NOW = moment().format("x")
                 if (NOW < STAKING_START) {
-                    const TEAMS = await team.find() 
+                    const TEAMS = await team.find()
+                    const MATCH_TYPE = await matchTypes.findOne({ _id: { $eq: type } })
                     const MATCH_TEAMS = teams.map((x) => {
                         return {
                             id: x.id,
@@ -40,12 +40,12 @@ export default async function CreateMatch(req: x, res: NextApiResponse<Response>
                     const NEW_MATCH = new match({
                         id: config.id(10),
                         teams: MATCH_TEAMS,
-                        stakingStart: start,
-                        matchType: type,
+                        stakingStart: parseInt(moment(start).format("x")),
+                        matchType: MATCH_TYPE?.name,
                         isDone: false,
                         matchNumber: null,
                         createdBy: USER.user?.name,
-                        created: moment().format()
+                        created: parseInt(moment().format("x"))
                     })
                     await NEW_MATCH.save()
                     return res.send({

@@ -67,3 +67,49 @@
 .ms-slow {
     --animate-duration: 2000ms
 }
+
+/* wallets modal */
+.defly-wallet-connect-modal {
+    @apply !z-[99999];
+}
+.hexagon_small {
+    cursor: default;
+    position: relative;
+    width: 56px;
+    height: 32.331615074619044px;
+    margin: 16.165807537309522px auto 0 auto;
+    display: grid;
+    transition: 0s;
+    border-left: solid 3px;
+    border-right: solid 3px;
+}
+
+.hexagon_small img {
+    position: absolute;
+    top: -11.5px;
+}
+
+.hexagon_small:before,
+.hexagon_small:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 39.69797974644666px;
+    height: 39.59797974644666px;
+    transform: scaleY(0.5774) rotate(-45deg);
+    background-color: inherit;
+    left: 5.201010126776669px;
+    transition: 0s;
+}
+
+.hexagon_small:before {
+    top: -19.79898987322333px;
+    border-top: solid 4.242640687119286px ;
+    border-right: solid 4.242640687119286px ;
+}
+
+.hexagon_small:after {
+    bottom: -19.79898987322333px;
+    border-bottom: solid 4.242640687119286px ;
+    border-left: solid 4.242640687119286px ;
+}
