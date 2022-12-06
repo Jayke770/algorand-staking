@@ -9,7 +9,7 @@ type props = {
     onUpdate: (id: string, name: string, logo: string) => void,
     onDelete: (id: string) => void
 }
-export default function Team({ id, name, created, logo, onUpdate, onDelete }: props) {
+export default function _Card({ id, name, created, logo, onUpdate, onDelete }: props) {
     return (
         <div>
             <Card

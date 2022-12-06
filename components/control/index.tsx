@@ -1,4 +1,4 @@
-export { default as TeamCard } from './teams/team'
+export { default as TeamCard } from './teams/card'
 export { default as TeamLoader } from './teams/loader'
 export { default as TeamEmpty } from './teams/empty'
 export { default as MatchType } from './Match/type'
