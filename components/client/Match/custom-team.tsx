@@ -29,7 +29,7 @@ export default function CustomTeams({ teams, seleted, teamsCount }: props) {
                                 {teams.slice(0, 7).map((team, i) => (
                                     <img
                                         key={i}
-                                        className={`inline-flex w-7 h-7 first:ml-0 -ml-4 relative dark:bg-blue-700 rounded-full object-contain ring-2 ${user_bet && user_bet.teamID === team.id ? 'ring-primary' : 'ring-white'}`}
+                                        className={`inline-flex w-7 h-7 first:ml-0 -ml-4 relative dark:bg-blue-700 rounded-full object-contain ring-2 ring-white`}
                                         src={`/api/teams/${team.id}`}
                                         alt={team.name} />
                                 ))}
