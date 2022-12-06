@@ -51,7 +51,7 @@ export default function Matches() {
     const { matchesData, matchesLoading } = ClientMatches()
     const [tab, setTab] = useState<Tab>({ active: 'today', data: { yesterday: [], today: [], tomorrow: [] } })
     useEffect(() => {
-        if (matchesData) setTab({ ...tab, data: { today: matchesData.today, yesterday: matchesData.yesterday, tomorrow: matchesData.tomorrow } })
+        if (matchesData) setTab({ active: tab.active, data: { today: matchesData.today, yesterday: matchesData.yesterday, tomorrow: matchesData.tomorrow } })
     }, [matchesData, setTab])
     return (
         <Page>

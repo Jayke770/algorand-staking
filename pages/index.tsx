@@ -9,11 +9,9 @@ interface Wallets {
   opened: boolean
 }
 export default function Home() {
-  const f = useWallet()
   const [wallets, setWallets] = useState<Wallets>({
     opened: false
   })
-  console.log(f)
   return (
     <Page>
       <Head>

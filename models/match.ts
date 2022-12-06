@@ -1,4 +1,25 @@
 import mongoose from "mongoose"
+type TxInfo = {
+    id: string,
+    txId: string,
+    "confirmed-round": string,
+    "pool-error": string,
+    txn: {
+        sig: Uint8Array,
+        txn: {
+            amt: number,
+            fee: number,
+            fv: number,
+            gen: string,
+            gh: Uint8Array,
+            lv: number,
+            note: Uint8Array,
+            rcv: Uint8Array,
+            snd: Uint8Array,
+            type: string
+        }
+    }
+}
 interface Match {
     id: string,
     teams: {
@@ -14,8 +35,10 @@ interface Match {
         betId: string,
         address: string,
         userid: string,
+        teamid: string,
         username: string
         amount: number,
+        txInfo: TxInfo,
         created: string,
     }[],
     declare: {
@@ -50,8 +73,10 @@ const match = new mongoose.Schema<Match>({
         betId: String,
         address: String,
         userid: String,
+        teamid: String,
         username: String,
         amount: Number,
+        txInfo: Object,
         created: String,
     }],
     declare: {
