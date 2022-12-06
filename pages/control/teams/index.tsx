@@ -6,7 +6,7 @@ import { MdAdd } from 'react-icons/md'
 import { TeamCard, TeamEmpty, TeamLoader } from '../../../components/control'
 import validator from 'validator'
 import { Swal } from '../../../lib'
-import { ws, teams } from '../../.././lib/control'
+import { ws, teams } from '../../../lib/control'
 import InfiniteScroll from 'react-infinite-scroller'
 interface newTeam {
     opened?: boolean,

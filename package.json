@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node ./server/app.mjs",
     "install:pm2": "yarn global add pm2",
+    "build:skip-pm2": "yarn  && next build && yarn lint",
     "build": "yarn && yarn install:pm2 && next build && yarn lint",
     "start": "pm2 start ecosystem.config.js --env production",
     "lint": "next lint"
