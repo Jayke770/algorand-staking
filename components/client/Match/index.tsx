@@ -164,9 +164,9 @@ export default function MatchCard({ match, isNormalMatch, index }: props) {
                     <div className='col-span-3 h-full flex gap-1 justify-center flex-col pr-2'>
                         <div className='flex justify-between items-baseline w-full'>
                             <span>Game:</span>
-                            <span className='text-teamdao-primary'>{match.matchType}</span>
+                            <span className=' text-teamdao-primary'>{match.matchType}</span>
                         </div>
-                        <div className='flex justify-between items-baseline w-full'>
+                        <div className='text-xs flex justify-between items-baseline w-full'>
                             <span>Prize Pool:</span>
                             <CountUp
                                 className='text-teamdao-primary'
@@ -174,7 +174,7 @@ export default function MatchCard({ match, isNormalMatch, index }: props) {
                                 end={match.bettors?.reduce((sum, x) => sum + x.amount, 0)}
                                 suffix=" $ALGO" />
                         </div>
-                        <div className='flex justify-between items-baseline w-full'>
+                        <div className='flex text-xs justify-between items-baseline w-full'>
                             <span>Starting in:</span>
                             <Countdown
                                 className='text-teamdao-primary'

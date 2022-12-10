@@ -3,7 +3,7 @@ import { Navbar, Page, Link, Card, Button, List, ListItem, Preloader } from "kon
 import Head from "next/head"
 import NextLink from 'next/link'
 import { MdArrowBack } from "react-icons/md"
-import { Logo, NotifyConnectWallet, Player } from "../../components"
+import { Logo, NotifyConnectWallet, Player, Web3Account } from "../../components"
 import { MdAdd, MdRemove, MdSend } from 'react-icons/md'
 import { FaPaperPlane } from 'react-icons/fa'
 import type { GetServerSideProps } from 'next'
@@ -341,9 +341,7 @@ export default function Match({ data }: { data: any }) {
                         </Link>
                     </NextLink>
                 }
-                right={
-                    activeAccount?.address ? <Button onClick={() => disconnect(activeAccount.providerId)}>Disconnect Wallet</Button> : null
-                } />
+                right={<Web3Account />} />
             <div className="flex flex-col lg:flex-row p-4 gap-3">
                 <div className="flex lg:flex-[30%]">
                     <div className="flex w-full flex-col gap-2">
@@ -497,7 +495,6 @@ export default function Match({ data }: { data: any }) {
                     <Player src="https://www.youtube.com/watch?v=YXohK05DnrI" />
                 </div>
             </div>
-            {!activeAccount ? <NotifyConnectWallet /> : null}
         </Page>
     )
 }

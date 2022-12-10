@@ -1,9 +1,8 @@
 import { Actions, Button, Card } from 'konsta/react'
 import { useConnectWallet, PROVIDER_ID } from '@txnlab/use-wallet'
-import { useState } from 'react'
 type props = {
-    opened: boolean,
-    onClose: () => void
+    opened?: boolean,
+    onClose?: () => void
 }
 export default function Connectors({ opened, onClose }: props) {
     const { providers } = useConnectWallet({
@@ -24,8 +23,10 @@ export default function Connectors({ opened, onClose }: props) {
                     {providers.map((x) => (
                         <Button
                             key={x.name}
-                            onClick={async (): Promise<void> => {
+                            onClick={async () => {
                                 await x.connect()
+                                //@ts-ignore
+                                onClose()
                             }}
                             clear
                             large

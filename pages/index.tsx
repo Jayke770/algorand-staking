@@ -2,7 +2,7 @@ import { Button, Card, Chip, Link, Navbar, Page, Tabbar } from 'konsta/react'
 import Head from 'next/head'
 import { MdAccountCircle, MdChevronRight } from 'react-icons/md'
 import NextLink from 'next/link'
-import { Web3Providers } from "../components"
+import { Web3Providers, Web3Account } from "../components"
 import { useState } from 'react'
 import { useWallet } from '@txnlab/use-wallet'
 interface Wallets {
@@ -15,23 +15,14 @@ export default function Home() {
   return (
     <Page>
       <Head>
-        <title>$TEAM Stake</title>
+        <title>$ALGO Stake</title>
       </Head>
       <Web3Providers
         opened={wallets.opened}
         onClose={() => setWallets({ ...wallets, opened: false })} />
       <Navbar
         translucent
-        right={
-          <Link
-            onClick={() => setWallets({ ...wallets, opened: true })}
-            navbar
-            className='k-color-brand-teamdao-primary'>
-            <MdAccountCircle
-              className='text-teamdao-primary'
-              size={'1.75rem'} />
-          </Link>
-        } />
+        right={<Web3Account />} />
       <div className='grid transition-all lg:grid-cols-2 xl:grid-cols-3  gap-2 py-2.5 px-2'>
         <NextLink href="/matches">
           <Card
