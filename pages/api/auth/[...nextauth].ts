@@ -12,7 +12,7 @@ export default NextAuth({
                 if (credentials?.username === process.env.ADMIN_USERNAME && credentials?.password === process.env.ADMIN_PASSWORD) {
                     return { id: 'admin', name: 'admin', image: '/assets/logo.png' }
                 } else {
-                    throw new Error('Invalid Account')
+                    return null
                 }
             },
         })

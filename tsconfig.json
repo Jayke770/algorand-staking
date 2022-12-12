@@ -25,7 +25,7 @@
     "**/*.tsx",
     "models/server/connect.mjs",
     "models/server/match.mjs"
-, "models/server/account.mjs"  ],
+, "models/server/account.mjs", "pages/api/auth/[...nextauth].js"  ],
   "exclude": [
     "node_modules"
   ]

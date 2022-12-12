@@ -28,35 +28,7 @@ export default function Auth() {
                 showConfirmButton: false,
                 willOpen: async (): Promise<void> => {
                     Swal.showLoading(Swal.getConfirmButton())
-                    await signIn('credentials', { redirect: false, username: login?.username, password: login?.password }).then((res) => {
-                        Swal.fire({
-                            icon: res?.ok ? 'success' : 'info',
-                            titleText: res?.ok ? 'Successfully Authenticated' : 'Invalid Account',
-                            text: res?.ok ? 'Redirecting...' : 'Please try again',
-                            backdrop: true,
-                            allowOutsideClick: false,
-                            showConfirmButton: !(res?.ok),
-                            willOpen: (): void => {
-                                if (res?.ok) {
-                                    Swal.showLoading(Swal.getConfirmButton())
-                                    //@ts-ignore
-                                    router.push(res?.url)
-                                    setlogin({ ...login, username: null, password: null })
-                                    setTimeout(() => {
-                                        Swal.close()
-                                    }, 2000)
-                                }
-                            }
-                        })
-                    }).catch((e) => {
-                        Swal.fire({
-                            icon: 'error',
-                            titleText: 'Connection Error',
-                            text: e.message,
-                            backdrop: true,
-                            allowOutsideClick: false
-                        })
-                    })
+                    await signIn('credentials', { username: login?.username, password: login?.password })
                 }
             })
         }
@@ -71,10 +43,11 @@ export default function Auth() {
                     raised
                     className='w-full md:w-[400px]'>
                     <div className='py-4'>
-                        <div className='flex justify-center items-center'>
+                        <div className='flex justify-center items-center pb-5'>
                             <img
                                 alt=''
-                                src='/assets/logo.png' />
+                                src='/assets/logo.png'
+                                className=' h-44' />
                         </div>
                         <List
                             margin='m-0'>
