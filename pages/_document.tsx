@@ -5,6 +5,9 @@ export default function Document() {
         <Html lang='en' className='dark'>
             <Head>
                 <meta name="name" content="$ALGO Stake" />
+                <meta charSet="utf-8" />
+                <meta name="theme-color" content="#1b8520" />
+                <link rel="shortcut icon" href="/assets/logo.png" type="image/x-png" />
                 <link rel="manifest" href="/manifest.json" />
                 <link rel="apple-touch-icon" href="/assets/logo.png"></link>
                 <meta name="theme-color" content="#1b8520" />

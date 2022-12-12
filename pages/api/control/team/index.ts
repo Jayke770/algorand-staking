@@ -18,6 +18,7 @@ export default async function Teams(req: x, res: NextApiResponse<Response>) {
             return res.status(401).send("Unauthorized")
         }
     } catch (e) {
+        console.log(e)
         return res.status(500).send("Internal Server Error")
     }
 }   

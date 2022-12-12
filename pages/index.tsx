@@ -4,7 +4,6 @@ import { MdAccountCircle, MdChevronRight } from 'react-icons/md'
 import NextLink from 'next/link'
 import { Web3Providers, Web3Account } from "../components"
 import { useState } from 'react'
-import { useWallet } from '@txnlab/use-wallet'
 interface Wallets {
   opened: boolean
 }

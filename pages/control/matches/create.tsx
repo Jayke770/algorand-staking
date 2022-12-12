@@ -195,7 +195,7 @@ export default function CreateMatch() {
                                     placeholder='Search Team ID or Name'
                                     className='p-3 mb-2 w-full md:w-96 rounded-lg bg-md-dark-surface-2 text-zinc-300 border-none outline-none transition-all focus:ring-1 focus:ring-offset-1 focus:ring-offset-md-dark-surface-1 focus:ring-teamdao-primary/50' />
                             </div>
-                            <div className="h-[calc(100vh-280px)] overflow-auto">
+                            <div className="h-[calc(100vh-240px)] overflow-auto">
                                 <InfiniteScroll
                                     pageStart={0}
                                     hasMore={TeamList.more && !searchRef?.current?.value}

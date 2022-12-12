@@ -1,8 +1,9 @@
 import { Actions, Button, Card } from 'konsta/react'
 import { useConnectWallet, PROVIDER_ID } from '@txnlab/use-wallet'
+import { useAccount } from '../../lib/client'
 type props = {
     opened?: boolean,
-    onClose?: () => void
+    onClose: () => void
 }
 export default function Connectors({ opened, onClose }: props) {
     const { providers } = useConnectWallet({
@@ -16,7 +17,7 @@ export default function Connectors({ opened, onClose }: props) {
     return (
         <Actions
             onBackdropClick={onClose}
-            opened={opened}>
+            opened={opened} >
             <Card>
                 <div className='px-3 text-xl font-bold mb-3'>Select Your Wallet</div>
                 <div className='grid md:grid-cols-2 gap-2 transition-all'>
@@ -25,7 +26,6 @@ export default function Connectors({ opened, onClose }: props) {
                             key={x.name}
                             onClick={async () => {
                                 await x.connect()
-                                //@ts-ignore
                                 onClose()
                             }}
                             clear
@@ -42,6 +42,6 @@ export default function Connectors({ opened, onClose }: props) {
                     ))}
                 </div>
             </Card>
-        </Actions>
+        </Actions >
     )
 }

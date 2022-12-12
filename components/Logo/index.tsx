@@ -5,7 +5,7 @@ type HexagonType = {
     className?: string,
     size?: string,
     fill?: string,
-    padding: string,
+    padding?: string,
     onClick?: () => void
 }
 export default function Hexagon(props: HexagonType) {

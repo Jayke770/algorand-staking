@@ -2,7 +2,7 @@ import { Navbar, Link, Page, Tabbar, TabbarLink, Card, Segmented, SegmentedButto
 import NextLink from 'next/link'
 import { MdArrowBack, MdExpandMore } from 'react-icons/md'
 import { useEffect, useState } from 'react'
-import { Logo } from "../../components"
+import { Logo, Web3Account } from "../../components"
 import Head from "next/head"
 import { ClientMatches, ClientMathTypes, wsClient } from '../../lib/client'
 import { useContext } from 'react'
@@ -76,16 +76,19 @@ export default function Matches() {
                     </NextLink>
                 }
                 right={
-                    <Link
-                        component="div"
-                        className="k-color-brand-teamdao-primary"
-                        navbar>
-                        <div className="flex items-center gap-2">
-                            FIFA
-                            <MdExpandMore
-                                size={'1.25rem'} />
-                        </div>
-                    </Link>
+                    <>
+                        <Link
+                            component="div"
+                            className="k-color-brand-teamdao-primary"
+                            navbar>
+                            <div className="flex items-center gap-2">
+                                FIFA
+                                <MdExpandMore
+                                    size={'1.25rem'} />
+                            </div>
+                        </Link>
+                        <Web3Account />
+                    </>
                 } />
 
             <div className="flex flex-col">

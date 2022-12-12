@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 interface Account {
     avatar: string,
     ip: string,
+    wallet: string,
     device: string,
     address: string,
     created: number
@@ -9,6 +10,7 @@ interface Account {
 const account = new mongoose.Schema<Account>({
     avatar: { type: String, required: true },
     ip: { type: String, required: true },
+    wallet: { type: String, required: true },
     device: { type: String, required: true },
     address: { type: String, required: true },
     created: { type: Number, required: true }
