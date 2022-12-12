@@ -403,9 +403,13 @@ export default function Match({ data }: { data: any }) {
                                     </div>
                                 ) : (
                                     <div className="flex justify-center items-center mt-2">
-                                        <Countdown
-                                            date={matchData.stakingStart}
-                                            renderer={_match_countdown} />
+                                        {matchData.isDone ? (
+                                            <span className='text-base text-center dark:text-red-500 font-bold'>STAKING IS CLOSED</span>
+                                        ) : (
+                                            <Countdown
+                                                date={matchData.stakingStart}
+                                                renderer={_match_countdown} />
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -465,6 +469,7 @@ export default function Match({ data }: { data: any }) {
                                             <div className=" font-teamdao text-4xl tracking-widest font-bold ">{matchData.teams[0].score}</div>
                                             <div className=" font-teamdao text-4xl tracking-widest font-bold ">{matchData.teams[1].score}</div>
                                         </div>
+                                        {/* stake */}
                                         <div className="grid grid-cols-3 place-items-center">
                                             <div className="flex items-center justify-center flex-col gap-1">
                                                 <div className="font-teamdao text-xl tracking-widest font-semibold ">{matchData.bettors.reduce((sum, bettor) => sum + (bettor.teamid === matchData.teams[0].id ? bettor.amount : 0), 0)}</div>
@@ -476,6 +481,7 @@ export default function Match({ data }: { data: any }) {
                                                 <div className="text-teamdao-primary">$ALGO</div>
                                             </div>
                                         </div>
+                                        {/* stakers */}
                                         <div className="grid grid-cols-3 place-items-center">
                                             <div className="flex items-center justify-center flex-col gap-1">
                                                 <div className=" font-teamdao text-xl tracking-widest font-semibold ">{matchData.bettors.reduce((sum, bettor) => sum + (bettor.teamid === matchData.teams[0].id ? 1 : 0), 0)}</div>

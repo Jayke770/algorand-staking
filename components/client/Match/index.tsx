@@ -6,11 +6,32 @@ import Link from 'next/link'
 import { team } from '../../../models'
 import Countdown from 'react-countdown'
 import CountUp from 'react-countup'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 const border = {
     blue: "after:border-l-blue-500 before:border-t-blue-500 after:border-b-blue-500 before:border-r-blue-500 !border-x-blue-500",
     pink: "after:border-l-pink-500 before:border-t-pink-500 after:border-b-pink-500 before:border-r-pink-500 !border-x-pink-500"
+}
+type TxInfo = {
+    id: string,
+    txId: string,
+    "confirmed-round": string,
+    "pool-error": string,
+    txn: {
+        sig: Uint8Array,
+        txn: {
+            amt: number,
+            fee: number,
+            fv: number,
+            gen: string,
+            gh: Uint8Array,
+            lv: number,
+            note: Uint8Array,
+            rcv: Uint8Array,
+            snd: Uint8Array,
+            type: string
+        }
+    }
 }
 type props = {
     match: {
@@ -29,8 +50,10 @@ type props = {
             betId: string,
             address: string,
             userid: string,
+            teamid: string,
             username: string
             amount: number,
+            txInfo: TxInfo,
             created: string,
         }[],
         declare: {
@@ -51,10 +74,19 @@ type props = {
     isNormalMatch: boolean,
     index: number
 }
+type Info = {
+    initialProfit: {
+        first: number,
+        second: number
+    }
+}
 export default function MatchCard({ match, isNormalMatch, index }: props) {
     const router = useRouter()
     const [MoreTeams, SetMoreTeams] = useState<boolean>(false)
     const moreTeam = useRef<HTMLDivElement | null>(null)
+    const [info, setInfo] = useState<Info>({
+        initialProfit: { first: 0, second: 0 }
+    })
     const _countdown = ({ days, hours, minutes, seconds, completed }: { days: number, hours: number, minutes: number, seconds: number, completed: boolean }) => {
         if (completed) {
             return <span className='text-center dark:text-orange-500'>🔴LIVE</span>
@@ -67,6 +99,21 @@ export default function MatchCard({ match, isNormalMatch, index }: props) {
         //@ts-ignore
         event.target?.id === "more-team" ? SetMoreTeams(true) : router.push(`/matches/${match.id}`)
     }
+    useEffect(() => {
+        const TOTAL_STAKES = match.bettors.reduce((sum, bettor) => sum + bettor.amount, 0)
+        const FIRST_TEAM_TOTAL_STAKES = match.bettors.reduce((sum, bettor) => sum + (match.teams[0].id === bettor.teamid ? bettor.amount : 0), 0)
+        const FIRST = 1 / TOTAL_STAKES * 100
+        const SECOND = 1 / FIRST_TEAM_TOTAL_STAKES * 100
+        setInfo({
+            ...info,
+            initialProfit:
+            {
+                ...info?.initialProfit,
+                first: isFinite(FIRST) ? FIRST : 0,
+                second: isFinite(SECOND) ? SECOND : 0
+            }
+        })
+    }, [match])
     return (
         <>
             <Card
@@ -81,28 +128,36 @@ export default function MatchCard({ match, isNormalMatch, index }: props) {
                                 alt={match.teams[0].name}
                                 src={match.teams[0].logo}
                                 border={border.blue}
-                                isDone={false}
+                                isDone={match.isDone}
                                 selected={false}
-                                isWinner={false} />
+                                isWinner={match.winner === match.teams[0].id} />
                             <div className='flex justify-center items-end -mb-2'>
                                 <div className='text-white font-bold tracking-widest text-3xl'>VS</div>
                             </div>
                             <SmallLogo
-                                alt={match.teams[0].name}
-                                src={match.teams[0].logo}
+                                alt={match.teams[1].name}
+                                src={match.teams[1].logo}
                                 border={border.pink}
-                                isDone={false}
+                                isDone={match.isDone}
                                 selected={false}
-                                isWinner={false} />
+                                isWinner={match.winner === match.teams[1].id} />
                             <div className='col-span-full grid grid-cols-3 mt-5'>
                                 <div className='flex justify-center gap-1'>
                                     <span className='text-white'>1 =</span>
-                                    <span className='text-teamdao-primary'>99</span>
+                                    {info.initialProfit.first > info.initialProfit.second ? (
+                                        <span className='text-teamdao-primary'>{info.initialProfit.first.toFixed(2)}</span>
+                                    ) : (
+                                        <span className='text-red-500'>{info.initialProfit.second.toFixed(2)}</span>
+                                    )}
                                 </div>
                                 <br />
                                 <div className='flex justify-center gap-1'>
                                     <span className='text-white'>1 =</span>
-                                    <span className='text-red-500'>99</span>
+                                    {info.initialProfit.second > info.initialProfit.first ? (
+                                        <span className='text-teamdao-primary'>{info.initialProfit.second.toFixed(2)}</span>
+                                    ) : (
+                                        <span className='text-red-500'>{info.initialProfit.first.toFixed(2)}</span>
+                                    )}
                                 </div>
                             </div>
                         </div>

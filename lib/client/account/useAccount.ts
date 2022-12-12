@@ -3,7 +3,8 @@ type AccountData = {
     address: string,
     wallet: string,
     avatar: string,
-    created: number
+    created: number,
+    balance?: number
 }
 const useAccount = () => {
     const [accountData, setAccountData] = useState<AccountData>()

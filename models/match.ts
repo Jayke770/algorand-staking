@@ -43,13 +43,15 @@ interface Match {
     }[],
     declare: {
         initial: boolean,
-        final: boolean
+        final: boolean,
+        by: string
     },
     comments: {
         commentId: string,
         message: string,
         created: string
     }[],
+    stakingEnded: string,
     isDone: boolean,
     matchNumber: number,
     profit: number,
@@ -81,7 +83,8 @@ const match = new mongoose.Schema<Match>({
     }],
     declare: {
         initial: { type: Boolean },
-        final: { type: Boolean }
+        final: { type: Boolean },
+        by: { type: String }
     },
     comments: [{
         commentId: String,
@@ -93,6 +96,7 @@ const match = new mongoose.Schema<Match>({
     profit: { type: Number },
     shareLink: { type: String },
     liveLink: { type: String },
+    stakingEnded: { type: String },
     createdBy: { type: String, required: true },
     created: { type: Number, required: true },
 })

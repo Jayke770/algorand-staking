@@ -1,10 +1,9 @@
 import { useConnectWallet, useWallet } from '@txnlab/use-wallet'
-import { Button, Card, Icon, Link, Popover } from 'konsta/react'
+import { Block, Button, Card, Icon, Link, Popover } from 'konsta/react'
 import { useEffect, useRef, useState } from 'react'
 import { MdAccountCircle } from "react-icons/md"
-import { Web3Providers } from '../'
+import { Web3Providers, TeamLogo } from '../'
 import { Account, useAccount } from '../../lib/client'
-import Image from 'next/image'
 import { config } from '../../lib'
 type props = {
     onClick?: () => void
@@ -13,7 +12,8 @@ type AccountData = {
     address: string,
     wallet: string,
     avatar: string,
-    created: number
+    created: number,
+    balance?: number
 }
 interface Account {
     opened: boolean,
@@ -57,11 +57,10 @@ export default function Web3Account({ onClick }: props) {
                         {activeAccount ? (
                             <>
                                 <div className='flex justify-center items-center'>
-                                    <img
-                                        loading='lazy'
+                                    <TeamLogo
                                         src={accountData?.avatar}
-                                        alt={accountData?.address}
-                                        className="w-20 h-20 rounded-full object-contain" />
+                                        alt={accountData?.wallet}
+                                        height={112} />
                                 </div>
                                 <div className='flex flex-col gap-2'>
                                     <div className='flex justify-between text-sm font-semibold items-baseline'>
@@ -70,7 +69,7 @@ export default function Web3Account({ onClick }: props) {
                                     </div>
                                     <div className='flex justify-between text-sm font-semibold items-baseline'>
                                         <span className='text-zinc-400'>Balance</span>
-                                        <span className='text-zinc-300'>44 $ALGO</span>
+                                        <span className='text-zinc-300'>{accountData?.balance} $ALGO</span>
                                     </div>
                                 </div>
                                 <div className='flex'>
@@ -91,15 +90,8 @@ export default function Web3Account({ onClick }: props) {
                                         alt={'logo'}
                                         className="w-20 h-20 rounded-full object-contain" />
                                 </div>
-                                <div className='flex flex-col gap-2'>
-                                    <div className='flex justify-between text-sm font-semibold items-baseline'>
-                                        <span className='text-zinc-400'>Address</span>
-                                        <span className='text-zinc-300'>******</span>
-                                    </div>
-                                    <div className='flex justify-between text-sm font-semibold items-baseline'>
-                                        <span className='text-zinc-400'>Balance</span>
-                                        <span className='text-zinc-300'>*** </span>
-                                    </div>
+                                <div className='flex flex-col gap-2 w-full'>
+                                    <p className='text-base font-normal text-white text-center'>Connect your Algorand Wallet</p>
                                 </div>
                                 <div className='flex'>
                                     <Button

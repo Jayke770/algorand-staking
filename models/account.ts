@@ -5,6 +5,13 @@ interface Account {
     wallet: string,
     device: string,
     address: string,
+    notifications: {
+        id: string,
+        type: string,
+        content: string,
+        matchid: string,
+        created: number
+    }[],
     created: number
 }
 const account = new mongoose.Schema<Account>({
@@ -12,6 +19,13 @@ const account = new mongoose.Schema<Account>({
     ip: { type: String, required: true },
     wallet: { type: String, required: true },
     device: { type: String, required: true },
+    notifications: [{
+        id: { type: String, required: true },
+        type: { type: String, required: true },
+        content: { type: String, required: true },
+        matchid: { type: String, required: true },
+        created: { type: Number, required: true },
+    }],
     address: { type: String, required: true },
     created: { type: Number, required: true }
 })

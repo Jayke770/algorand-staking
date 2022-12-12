@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { dbConnect, account } from '../../../../models'
+import { wallet } from '../../../../lib/control'
 import requestIp from 'request-ip'
 import moment from 'moment'
 interface x extends NextApiRequest {
@@ -12,7 +13,8 @@ type Response = {
     address: string,
     wallet: string,
     avatar: string,
-    created: number
+    created: number,
+    balance?: number
 } | "Internal Server Error" | "Unauthorized"
 export default async function Account(req: x, res: NextApiResponse<Response>) {
     const { method, query: { info }, headers } = req
@@ -22,7 +24,13 @@ export default async function Account(req: x, res: NextApiResponse<Response>) {
             await dbConnect()
             const isAddressFound = await account.findOne({ address: { $eq: info[0] } }, { _id: 0, ip: 0, device: 0 })
             if (isAddressFound) {
-                return res.send(isAddressFound)
+                return res.send({
+                    address: isAddressFound.address,
+                    wallet: isAddressFound.wallet,
+                    avatar: isAddressFound.avatar,
+                    created: isAddressFound.created,
+                    balance: await wallet.balance(info[0])
+                })
             } else {
                 //create 
                 const NEW_ACCOUNT_DATA = {
@@ -39,7 +47,8 @@ export default async function Account(req: x, res: NextApiResponse<Response>) {
                     address: NEW_ACCOUNT_DATA.address,
                     wallet: NEW_ACCOUNT_DATA.wallet,
                     avatar: NEW_ACCOUNT_DATA.avatar,
-                    created: NEW_ACCOUNT_DATA.created
+                    created: NEW_ACCOUNT_DATA.created,
+                    balance: await wallet.balance(info[0])
                 })
             }
         } else {

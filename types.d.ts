@@ -1,3 +1,4 @@
+//match info
 declare interface Match {
     id: string,
     teams: {
@@ -21,7 +22,8 @@ declare interface Match {
     }[],
     declare: {
         initial: boolean,
-        final: boolean
+        final: boolean,
+        by: string
     },
     comments: {
         commentId: string,
@@ -36,3 +38,9 @@ declare interface Match {
     createdBy: string,
     created: Number,
 }
+//api response type
+declare type ApiResponse = {
+    status: boolean,
+    title?: string,
+    message?: string
+} | "Internal Server Error" | "Unauthorized"
