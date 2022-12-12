@@ -11,8 +11,10 @@ type Match = {
         betId: string,
         address: string,
         userid: string,
+        teamid: string,
         username: string
         amount: number,
+        txInfo: TxInfo,
         created: string,
     }[],
     declare: {

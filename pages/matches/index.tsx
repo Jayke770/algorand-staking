@@ -7,7 +7,7 @@ import Head from "next/head"
 import { ClientMatches, ClientMathTypes, wsClient } from '../../lib/client'
 import { useContext } from 'react'
 import { MatchCard, MatchEmpty, MatchLoader } from "../../components/client"
-type Match = {
+type ClientMatch = {
     __v: any,
     id: string,
     teams: { id: string, name: string, logo: string, score: number }[],
@@ -18,8 +18,10 @@ type Match = {
         betId: string,
         address: string,
         userid: string,
+        teamid: string,
         username: string
         amount: number,
+        txInfo: TxInfo,
         created: string,
     }[],
     declare: {
@@ -40,9 +42,9 @@ type Match = {
 interface Tab {
     active: 'yesterday' | 'today' | 'tomorrow',
     data: {
-        today: Match[],
-        yesterday: Match[],
-        tomorrow: Match[]
+        today: ClientMatch[],
+        yesterday: ClientMatch[],
+        tomorrow: ClientMatch[]
     }
 }
 export default function Matches() {

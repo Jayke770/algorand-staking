@@ -12,27 +12,6 @@ const border = {
     blue: "after:border-l-blue-500 before:border-t-blue-500 after:border-b-blue-500 before:border-r-blue-500 !border-x-blue-500",
     pink: "after:border-l-pink-500 before:border-t-pink-500 after:border-b-pink-500 before:border-r-pink-500 !border-x-pink-500"
 }
-type TxInfo = {
-    id: string,
-    txId: string,
-    "confirmed-round": string,
-    "pool-error": string,
-    txn: {
-        sig: Uint8Array,
-        txn: {
-            amt: number,
-            fee: number,
-            fv: number,
-            gen: string,
-            gh: Uint8Array,
-            lv: number,
-            note: Uint8Array,
-            rcv: Uint8Array,
-            snd: Uint8Array,
-            type: string
-        }
-    }
-}
 type props = {
     match: {
         __v: any,

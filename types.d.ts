@@ -38,6 +38,27 @@ declare interface Match {
     createdBy: string,
     created: Number,
 }
+declare type TxInfo = {
+    id: string,
+    txId: string,
+    "confirmed-round": string,
+    "pool-error": string,
+    txn: {
+        sig: Uint8Array,
+        txn: {
+            amt: number,
+            fee: number,
+            fv: number,
+            gen: string,
+            gh: Uint8Array,
+            lv: number,
+            note: Uint8Array,
+            rcv: Uint8Array,
+            snd: Uint8Array,
+            type: string
+        }
+    }
+}
 //api response type
 declare type ApiResponse = {
     status: boolean,
