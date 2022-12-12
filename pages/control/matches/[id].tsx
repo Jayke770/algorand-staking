@@ -37,7 +37,7 @@ export default function MatchInfo({ DATA }: { DATA: any }) {
                 colors={{
                     textMaterial: 'text-md-light-on-surface dark:text-teamdao-primary'
                 }} />
-            <div className="flex flex-col p-3 gap-3 h-[calc(100ch-220px)] overflow-auto">
+            <div className="flex flex-col p-3 gap-3">
                 <div className="w-full md:w-96 mb-1">
                     <Segmented
                         strong
@@ -58,133 +58,137 @@ export default function MatchInfo({ DATA }: { DATA: any }) {
                 {/* Match info */}
                 {tab === 'info' ? (
                     <div className="flex flex-col lg:flex-row gap-2 h-full">
-                        <div className="flex-[25%] flex flex-col gap-3">
-                            <Card
-                                className="w-full"
-                                margin="m-0">
-                                {matchData.teams.length <= 2 ? (
-                                    <div className="p-4  flex flex-col">
-                                        <div className="grid grid-cols-3">
-                                            <Logo
-                                                className={`w-full h-full ${border.blue} text-teamdao-primary `}
-                                                src={matchData.teams[0].logo}
-                                                size="w-full xl:h-36 lg:h-30"
-                                                fill={"fill-md-dark-surface-1"} />
-                                            <div className="flex justify-center items-center">
-                                                <p className="text-5xl dark:text-red-600 tracking-widest font-bold font-evil-empire">VS</p>
-                                            </div>
-                                            <Logo
-                                                className={`w-full h-full ${border.pink} text-teamdao-primary `}
-                                                src={matchData.teams[1].logo}
-                                                size="w-full xl:h-36 lg:h-30"
-                                                fill={"fill-md-dark-surface-1"} />
-                                        </div>
-                                        <div className="grid grid-cols-3 gap-y-5 mt-7">
-                                            {/* team name */}
-                                            <div className="flex justify-center items-center">
-                                                <span className=" font-teamdao text-teamdao-primary text-3xl tracking-wide font-medium ">{matchData.teams[0].name}</span>
-                                            </div>
-                                            <div className="flex justify-center items-center text-zinc-500 text-3xl font-bold">-</div>
-                                            <div className="flex justify-center items-center">
-                                                <span className=" font-teamdao text-teamdao-primary text-3xl tracking-wide font-medium ">{matchData.teams[1].name}</span>
-                                            </div>
-                                            {/* teamsocre */}
-                                            <div className="flex justify-center items-center">
-                                                <span className=" font-teamdao text-zinc-300 text-3xl tracking-wide font-medium ">{matchData.teams[0].score}</span>
-                                            </div>
-                                            <div className="flex justify-center items-center text-zinc-500 text-3xl font-bold">-</div>
-                                            <div className="flex justify-center items-center">
-                                                <span className=" font-teamdao text-zinc-300 text-3xl tracking-wide font-medium ">{matchData.teams[1].score}</span>
-                                            </div>
-                                            {/* staked */}
-                                            <div className="flex justify-center items-center">
-                                                <CountUp
-                                                    className=" font-teamdao text-zinc-300 text-xl tracking-wide font-medium"
-                                                    start={0}
-                                                    //@ts-ignore
-                                                    end={matchData.bettors.reduce(x => x.teamid === matchData.teams[0].id ? x.amount : 0, 0)} />
-                                            </div>
-                                            <div className="flex justify-center items-center text-teamdao-primary text-lg">Staked</div>
-                                            <div className="flex justify-center items-center">
-                                                <CountUp
-                                                    className=" font-teamdao text-zinc-300 text-xl tracking-wide font-medium"
-                                                    start={0}
-                                                    //@ts-ignore
-                                                    end={matchData.bettors.reduce(x => x.teamid === matchData.teams[1].id ? x.amount : 0, 0)} />
-                                            </div>
-                                            {/* stakers */}
-                                            <div className="flex justify-center items-center">
-                                                <CountUp
-                                                    className=" font-teamdao text-zinc-300 text-xl tracking-wide font-medium"
-                                                    start={0}
-                                                    //@ts-ignore
-                                                    end={matchData.bettors.reduce(x => x.teamid === matchData.teams[0].id ? 1 : 0, 0)} />
-                                            </div>
-                                            <div className="flex justify-center items-center text-teamdao-primary text-lg">Stakers</div>
-                                            <div className="flex justify-center items-center">
-                                                <CountUp
-                                                    className=" font-teamdao text-zinc-300 text-xl tracking-wide font-medium"
-                                                    start={0}
-                                                    //@ts-ignore
-                                                    end={matchData.bettors.reduce(x => x.teamid === matchData.teams[1].id ? 1 : 0, 0)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                ) : 'fa'}
-                            </Card>
-                            <Card
-                                margin="m-0"
-                                className="w-full">
-                                <Segmented
-                                    strong
-                                    raised
-                                    className=" k-color-brand-teamdao-secondary">
-                                    <SegmentedButton
-                                        rounded
-                                        strong
-                                        onClick={() => setTools('tools')}
-                                        active={tools === 'tools'}>Tools</SegmentedButton>
-                                    <SegmentedButton
-                                        rounded
-                                        strong
-                                        onClick={() => setTools('declare')}
-                                        active={tools === 'declare'}>Declare</SegmentedButton>
-                                </Segmented>
-                                {tools === 'tools' ? (
-                                    matchData.teams.length <= 2 ? (
-                                        <List margin="my-4">
-                                            <ListGroup>
-                                                <ListItem
-                                                    colors={{
-                                                        groupTitleBgMaterial: 'bg-md-light-surface-1 dark:bg-md-dark-surface-1'
-                                                    }}
-                                                    groupTitle
-                                                    title="Select Team" />
-                                                <ListItem
-                                                    link
-                                                    chevron={false}
-                                                    title={matchData.teams[0].name}
-                                                    after={
-                                                        <Checkbox />
-                                                    } />
-                                                <ListItem
-                                                    link
-                                                    chevron={false}
-                                                    title={matchData.teams[1].name}
-                                                    after={
-                                                        <Checkbox />
-                                                    } />
-                                                <div className="mx-3 mt-4">
-                                                    <Button
-                                                        className=" k-color-brand-teamdao-primary">Update Score</Button>
+                        <div className="flex-[25%] flex flex-col gap-3 pb-20">
+                            <div className="w-full h-full">
+                                <Card
+                                    className="w-full"
+                                    margin="m-0">
+                                    {matchData.teams.length <= 2 ? (
+                                        <div className="p-4  flex flex-col">
+                                            <div className="grid grid-cols-3">
+                                                <Logo
+                                                    className={`w-full h-full ${border.blue} text-teamdao-primary `}
+                                                    src={matchData.teams[0].logo}
+                                                    size="w-full xl:h-36 lg:h-30"
+                                                    fill={"fill-md-dark-surface-1"} />
+                                                <div className="flex justify-center items-center">
+                                                    <p className="text-5xl dark:text-red-600 tracking-widest font-bold font-evil-empire">VS</p>
                                                 </div>
-                                            </ListGroup>
-                                        </List>
-                                    ) : null
-                                ) : null}
-                            </Card>
+                                                <Logo
+                                                    className={`w-full h-full ${border.pink} text-teamdao-primary `}
+                                                    src={matchData.teams[1].logo}
+                                                    size="w-full xl:h-36 lg:h-30"
+                                                    fill={"fill-md-dark-surface-1"} />
+                                            </div>
+                                            <div className="grid grid-cols-3 gap-y-5 mt-7">
+                                                {/* team name */}
+                                                <div className="flex justify-center items-center">
+                                                    <span className=" font-teamdao text-teamdao-primary text-3xl tracking-wide font-medium ">{matchData.teams[0].name}</span>
+                                                </div>
+                                                <div className="flex justify-center items-center text-zinc-500 text-3xl font-bold">-</div>
+                                                <div className="flex justify-center items-center">
+                                                    <span className=" font-teamdao text-teamdao-primary text-3xl tracking-wide font-medium ">{matchData.teams[1].name}</span>
+                                                </div>
+                                                {/* teamsocre */}
+                                                <div className="flex justify-center items-center">
+                                                    <span className=" font-teamdao text-zinc-300 text-3xl tracking-wide font-medium ">{matchData.teams[0].score}</span>
+                                                </div>
+                                                <div className="flex justify-center items-center text-zinc-500 text-3xl font-bold">-</div>
+                                                <div className="flex justify-center items-center">
+                                                    <span className=" font-teamdao text-zinc-300 text-3xl tracking-wide font-medium ">{matchData.teams[1].score}</span>
+                                                </div>
+                                                {/* staked */}
+                                                <div className="flex justify-center items-center">
+                                                    <CountUp
+                                                        className=" font-teamdao text-zinc-300 text-xl tracking-wide font-medium"
+                                                        start={0}
+                                                        //@ts-ignore
+                                                        end={matchData.bettors.reduce(x => x.teamid === matchData.teams[0].id ? x.amount : 0, 0)} />
+                                                </div>
+                                                <div className="flex justify-center items-center text-teamdao-primary text-lg">Staked</div>
+                                                <div className="flex justify-center items-center">
+                                                    <CountUp
+                                                        className=" font-teamdao text-zinc-300 text-xl tracking-wide font-medium"
+                                                        start={0}
+                                                        //@ts-ignore
+                                                        end={matchData.bettors.reduce(x => x.teamid === matchData.teams[1].id ? x.amount : 0, 0)} />
+                                                </div>
+                                                {/* stakers */}
+                                                <div className="flex justify-center items-center">
+                                                    <CountUp
+                                                        className=" font-teamdao text-zinc-300 text-xl tracking-wide font-medium"
+                                                        start={0}
+                                                        //@ts-ignore
+                                                        end={matchData.bettors.reduce(x => x.teamid === matchData.teams[0].id ? 1 : 0, 0)} />
+                                                </div>
+                                                <div className="flex justify-center items-center text-teamdao-primary text-lg">Stakers</div>
+                                                <div className="flex justify-center items-center">
+                                                    <CountUp
+                                                        className=" font-teamdao text-zinc-300 text-xl tracking-wide font-medium"
+                                                        start={0}
+                                                        //@ts-ignore
+                                                        end={matchData.bettors.reduce(x => x.teamid === matchData.teams[1].id ? 1 : 0, 0)} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : 'fa'}
+                                </Card>
+                            </div>
+                            <div className="w-full h-full">
+                                <Card
+                                    margin="m-0"
+                                    className="w-full">
+                                    <Segmented
+                                        strong
+                                        raised
+                                        className=" k-color-brand-teamdao-secondary">
+                                        <SegmentedButton
+                                            rounded
+                                            strong
+                                            onClick={() => setTools('tools')}
+                                            active={tools === 'tools'}>Tools</SegmentedButton>
+                                        <SegmentedButton
+                                            rounded
+                                            strong
+                                            onClick={() => setTools('declare')}
+                                            active={tools === 'declare'}>Declare</SegmentedButton>
+                                    </Segmented>
+                                    {tools === 'tools' ? (
+                                        matchData.teams.length <= 2 ? (
+                                            <List margin="my-4">
+                                                <ListGroup>
+                                                    <ListItem
+                                                        colors={{
+                                                            groupTitleBgMaterial: 'bg-md-light-surface-1 dark:bg-md-dark-surface-1'
+                                                        }}
+                                                        groupTitle
+                                                        title="Select Team" />
+                                                    <ListItem
+                                                        link
+                                                        chevron={false}
+                                                        title={matchData.teams[0].name}
+                                                        after={
+                                                            <Checkbox />
+                                                        } />
+                                                    <ListItem
+                                                        link
+                                                        chevron={false}
+                                                        title={matchData.teams[1].name}
+                                                        after={
+                                                            <Checkbox />
+                                                        } />
+                                                    <div className="mx-3 mt-4">
+                                                        <Button
+                                                            className=" k-color-brand-teamdao-primary">Update Score</Button>
+                                                    </div>
+                                                </ListGroup>
+                                            </List>
+                                        ) : null
+                                    ) : null}
+                                </Card>
+                            </div>
                         </div>
-                        <div className="flex-[75%] w-full h-full">
+                        <div className="flex-[75%] w-full h-96 lg:h-[550px]">
                             <Player src="https://www.youtube.com/watch?v=YXohK05DnrI" />
                         </div>
                     </div>
